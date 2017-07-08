@@ -4,13 +4,18 @@ package me.yummykang.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import me.yummykang.dao.mongo.UserDao;
 import me.yummykang.dto.UserRequest;
 import me.yummykang.entity.User;
+import me.yummykang.entity.mongo.UserEntity;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,13 +30,23 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/users")
+@PreAuthorize("hasRole('USER')")
 public class UserController {
     @Resource(name ="redisTemplate")
     private ValueOperations<String, String> operations;
 
+    @Autowired
+    private UserDao userDao;
+
     @GetMapping
     public Object users(UserRequest<User> user) {
         operations.set("hello", "world");
+        UserEntity userEntity = new UserEntity();
+//        userEntity.setId(1L);
+        userEntity.setUserName("admin");
+        userEntity.setPassword("123456");
+        userEntity.setRoles(Arrays.asList("ADMIN", "USER"));
+        userDao.saveUser(userEntity);
         Wrapper<User> wrapper = new EntityWrapper<>();
         wrapper.like(!StringUtils.isEmpty(user.getName()), "name", user.getName())
                 .eq(user.getSex() != -1, "sex", user.getSex());

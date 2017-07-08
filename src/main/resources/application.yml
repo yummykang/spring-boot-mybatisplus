@@ -8,6 +8,19 @@ spring:
   devtools:
     restart:
       enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: users
+    redis:
+      hostName: localhost
+      password: ehu100
+      port: 6379
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
 
 # DRUID MYSQL DATABASE CONFIG
 druid:
@@ -51,18 +64,20 @@ mybatis-plus:
 #logging
 logging:
   level:
-   me:
-    yummykang: trace
+   me.yummykang: trace
+   org.springframework:
+         data: DEBUG
+         security: DEBUG
 
-
-app:
-  datasource:
-    redis:
-      hostName: localhost
-      password: ehu100
-      port: 6379
-      max-idle: 8
-      min-idle: 0
-      max-active: 8
-      max-wait: -1
+# JWT
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      path: "auth"
+      refresh: refresh
+      register: "auth/register"
 

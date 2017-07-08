@@ -30,7 +30,7 @@ public class RedisDataSource {
 
     @Bean
     @Primary
-    @ConfigurationProperties("app.datasource.redis")
+    @ConfigurationProperties("spring.data.redis")
     public RedisConnectionFactory jedisConnectionFactory() {
         log.info("------------------create datasource bean:redis---------------------");
         return new JedisConnectionFactory();

@@ -7,6 +7,7 @@ import me.yummykang.dto.EventRequest;
 import me.yummykang.entity.Events;
 import me.yummykang.service.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/events")
+@PreAuthorize("hasRole('USER')")
 public class EventsController {
     @Autowired
     private EventsService service;
