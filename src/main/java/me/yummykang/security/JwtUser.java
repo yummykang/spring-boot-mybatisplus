@@ -17,7 +17,6 @@ public class JwtUser implements UserDetails {
     private final String username;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public JwtUser(
             String id,
@@ -42,7 +41,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return encoder.encode(password);
+        return password;
     }
 
     @Override
