@@ -44,7 +44,7 @@ public class FilterConfig {
         return new Filter() {
             @Override
             public void init(javax.servlet.FilterConfig filterConfig) throws ServletException {
-                logger.info("-------------------CorsFilter init success:author-{}-------------------", filterConfig.getInitParameter("author"));
+                logger.info("-------------------CorsFilter init success:authoraa-{}-------------------", filterConfig.getInitParameter("author"));
             }
 
             @Override
