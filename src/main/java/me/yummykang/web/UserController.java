@@ -30,7 +30,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasAuthority('USER')")
 public class UserController {
     @Resource(name ="redisTemplate")
     private ValueOperations<String, String> operations;
@@ -40,13 +40,6 @@ public class UserController {
 
     @GetMapping
     public Object users(UserRequest<User> user) {
-        operations.set("hello", "world");
-        UserEntity userEntity = new UserEntity();
-//        userEntity.setId(1L);
-        userEntity.setUserName("admin");
-        userEntity.setPassword("123456");
-        userEntity.setRoles(Arrays.asList("ADMIN", "USER"));
-        userDao.saveUser(userEntity);
         Wrapper<User> wrapper = new EntityWrapper<>();
         wrapper.like(!StringUtils.isEmpty(user.getName()), "name", user.getName())
                 .eq(user.getSex() != -1, "sex", user.getSex());

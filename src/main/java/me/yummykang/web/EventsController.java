@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/events")
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasAuthority('USER')")
 public class EventsController {
     @Autowired
     private EventsService service;
